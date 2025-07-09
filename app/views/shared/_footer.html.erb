@@ -1,0 +1,27 @@
+<div class="footer">
+
+  <div class="container-fluid">
+    <ul class="footer-items">
+      <li class="footer-item">
+        <%= link_to root_path, class: "footer-link" do %>
+          <%= image_tag "s2pha-home.ico", alt: "Shop Navigation Icon", class: "footer-icon" %> shop
+        <% end %>
+      </li>
+      <li class="footer-item">
+        <%= link_to  categories_path, class: "footer-link" do %>
+          <%= image_tag "category.ico", alt: "Category Navigation Icon", class: "footer-icon" %> category
+        <% end %>
+      </li>
+      <li class="footer-item">
+        <%= link_to cart_path, class: "footer-link" do %>
+           <%= image_tag "cart.ico", alt: "Cart Navigation Icon", class: "footer-icon" %> cart
+        <% end %>
+      </li>
+      <li class="footer-item">
+        <%= link_to profile_path, class: "footer-link" do %>
+          <%= image_tag "profile.ico", alt: "Profile Navigation Icon", class: "footer-icon" %> profile
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -5,10 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum role: { customer: 0, owner: 1 }, _default: :customer
-
+  has_many :order_items
   validates :first_name, :last_name, presence: true
   validate :only_one_owner
-  before_destroy :prevent_owner_deletion
+  # before_destroy :prevent_owner_deletion
 
   private
 
@@ -18,7 +18,7 @@ class User < ApplicationRecord
     end
   end
 
-  def prevent_owner_deletion
-    throw(:abort) if owner?
-  end
+  # def prevent_owner_deletion
+  #   throw(:abort) if owner?
+  # end
 end

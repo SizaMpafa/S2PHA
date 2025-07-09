@@ -1,0 +1,23 @@
+<h1>Categories</h1>
+<% if @categories.any? %>
+  <ul>
+    <% @categories.each do |category| %>
+      <li>
+        <%= link_to category.name, category_path(category) %>
+        <% if category.subcategories.any? %>
+          <ul>
+            <% category.subcategories.each do |subcategory| %>
+              <li><%= link_to subcategory.name, category_path(subcategory) %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No categories available.</p>
+<% end %>
+
+<% if current_user&.owner? %>
+  <%= link_to "New Category", new_category_path %>
+<% end %>

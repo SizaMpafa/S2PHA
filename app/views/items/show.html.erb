@@ -1,0 +1,47 @@
+<h1><%= @item.name %></h1>
+<p><strong>Price:</strong> <%= number_to_currency(@item.price) %></p>
+<p><strong>Fit Type:</strong> <%= @item.fit_type || "N/A" %></p>
+<p><strong>Category:</strong> <%= @item.category.name %></p>
+
+<h2>Available Variants</h2>
+<% if @variants.any? %>
+  <%= form_with url: cart_items_path, local: true do |f| %>
+    <div>
+      <%= f.label :item_variant_id, "Select Variant" %>
+      <%= f.collection_select :item_variant_id, @variants, :id, :display_name, prompt: "Choose a variant" %>
+    </div>
+    <div>
+      <%= f.label :quantity, "Quantity" %>
+      <%= f.number_field :quantity, value: 1, min: 1 %>
+    </div>
+    <%= f.hidden_field :item_id, value: @item.id %>
+    <%= f.submit "Add to Cart" %>
+  <% end %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @variants.each do |variant| %>
+        <tr>
+          <td><%= variant.size %></td>
+          <td><%= variant.color %></td>
+          <td><%= variant.stock %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No variants available.</p>
+<% end %>
+
+<%= link_to "Back to Items", root_path %>
+<% if current_user&.owner? %>
+  <%= link_to "Edit Item", edit_item_path(@item) %>
+  <%= link_to "Delete Item", item_path(@item), method: :delete, data: { confirm: "Are you sure?" } %>
+<% end %>

@@ -1,0 +1,42 @@
+<h1>My Cart</h1>
+<% if @cart_items.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td><%= cart_item.item.name %></td>
+          <td><%= cart_item.item_variant.size %></td>
+          <td><%= cart_item.item_variant.color %></td>
+          <td>
+            <%= form_with model: cart_item, url: cart_item_path(cart_item), local: true do |f| %>
+              <%= f.number_field :quantity, value: cart_item.quantity, min: 1 %>
+              <%= f.submit "Update" %>
+            <% end %>
+          </td>
+          <td><%= number_to_currency(cart_item.item.price) %></td>
+          <td><%= number_to_currency(cart_item.item.price * cart_item.quantity) %></td>
+          <td>
+            <%= link_to "Remove", cart_item_path(cart_item), method: :delete, data: { confirm: "Are you sure?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p><strong>Total:</strong> <%= number_to_currency(@cart_items.sum { |ci| ci.item.price * ci.quantity }) %></p>
+  <%= link_to "Proceed to Checkout", new_order_path, class: "btn btn-primary" %>
+<% else %>
+  <p>Your cart is empty.</p>
+<% end %>
+
+<%= link_to "Continue Shopping", items_path %>

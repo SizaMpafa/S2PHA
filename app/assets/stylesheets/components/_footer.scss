@@ -1,0 +1,78 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa; // Light gray background
+  border-top: 1px solid #dee2e6; // Subtle border
+  padding: 10px 0;
+  z-index: 1000; // Ensure it stays above content
+}
+
+.footer-items {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-item {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333; // Dark text/icon color
+  text-decoration: none;
+  font-size: 12px; // Small text for mobile
+  padding: 8px;
+  transition: color 0.2s;
+
+  &:hover,
+  &:focus {
+    color: #007bff; // Primary color on hover
+    text-decoration: none;
+  }
+}
+
+.footer-icon,
+.fa-solid,
+.fas {
+  width: 50px; // Match Font Awesome size
+  height: 50px;
+  margin-bottom: 4px;
+  font-size: 24px; // Icon size
+  color: inherit; // Inherit link color
+}
+
+.footer-icon {
+  // For .ico or .png image
+  object-fit: contain; // Ensure image scales correctly
+  filter: grayscale(100%) opacity(0.7); // Monochrome effect
+  transition: filter 0.2s;
+
+  .footer-link:hover &,
+  .footer-link:focus & {
+    filter: grayscale(0%) opacity(1); // Color on hover
+  }
+}
+
+@media (min-width: 768px) {
+  // Adjust for larger screens if needed
+  .footer-link {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .footer-icon,
+  .fa-solid,
+  .fas {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+  }
+}

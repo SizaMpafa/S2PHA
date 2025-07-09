@@ -1,0 +1,19 @@
+<h1>My Profile</h1>
+<ul>
+  <li><strong>First Name:</strong> <%= @user.first_name %></li>
+  <li><strong>Last Name:</strong> <%= @user.last_name %></li>
+  <li><strong>Email:</strong> <%= @user.email %></li>
+  <li><strong>Phone Number:</strong> <%= @user.phone_number || "Not set" %></li>
+  <li><strong>Address:</strong> <%= @user.address || "Not set" %></li>
+</ul>
+
+<h2>My Orders</h2>
+<% if @user.orders.any? %>
+  <ul>
+    <% @user.orders.each do |order| %>
+      <li>Order #<%= order.id %> - Status: <%= order.status %> - <%= link_to "View", order_path(order) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No orders yet.</p>
+<% end %>

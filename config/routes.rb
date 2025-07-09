@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # get 'cart_items/create'
+  # get 'cart_items/update'
+  # get 'cart_items/destroy'
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -9,4 +11,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  devise_for :users
+  resources :categories
+  resources :items
+  resource :cart, only: %i[show update]
+  resource :cart_items, only: %i[create update destroy]
+  resource :profile, only: %i[show]
 end
