@@ -36,12 +36,10 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    begin
-      @category.destroy!
-      redirect_to categories_path, notice: "Category deleted successfully."
-    rescue ActiveRecord::RecordNotDestroyed
-      redirect_to categories_path, alert: "Cannot delete category with items or subcategories."
-    end
+    @category.destroy!
+    redirect_to categories_path, notice: "Category deleted successfully."
+  rescue ActiveRecord::RecordNotDestroyed
+    redirect_to categories_path, alert: "Cannot delete category with items or subcategories."
   end
 
   private

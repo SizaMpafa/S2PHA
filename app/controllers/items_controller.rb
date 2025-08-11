@@ -1,7 +1,9 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   # before_action :authenticate_user!, except: %i[index show]
-  before_action :restrict_to_owner, only: %i[new create edit update destroy]
+  # before_action :restrict_to_owner, only: %i[new create edit update destroy]
+  # before_action only: %i[new create] { authorize Item }
+  # before_action only: %i[edit update destroy] { authorize @item }
   before_action :authorize_item, except: %i[index show]
 
   def index
@@ -59,13 +61,13 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  # def authorize_item
-  #   authorize @item
-  # end
-
-  def restrict_to_owner
-    redirect_to root_path, alert: "Only owners can perform this action." unless current_user&.role == 1
+  def authorize_item
+    authorize @item || Item
   end
+
+  # def restrict_to_owner
+  #   redirect_to root_path, alert: "Only owners can perform this action." unless current_user&.role == 1
+  # end
 
   def item_params
     params.require(:item).permit(

@@ -13,9 +13,9 @@ class User < ApplicationRecord
   private
 
   def only_one_owner
-    if role == "owner" && User.where(role: :owner).where.not(id: id).exists?
-      errors.add(:role, "only one owner is allowed")
-    end
+    return unless role == "owner" && User.where(role: :owner).where.not(id: id).exists?
+
+    errors.add(:role, "only one owner is allowed")
   end
 
   # def prevent_owner_deletion
