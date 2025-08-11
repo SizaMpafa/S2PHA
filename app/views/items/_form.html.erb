@@ -11,13 +11,13 @@
                 collection: @categories,
                 include_blank: "Select a category",
                 required: true %>
-    <%# if @item.image.attached? %>
-<!--      <div class="form-group">
+    <% if @item.photo.present? %>
+      <div class="form-group">
         <label>Current Image</label>
-        <%#= image_tag @item.image, class: "form-image-preview" %>-->
-<!--      </div>-->
-    <%# end %>
-    <%#= f.input :image, as: :file, required: false %>
+        <%= cl_image_tag @item.photo, class: "form-image-preview" %>
+      </div>
+    <% end %>
+    <%= f.input :photo, as: :file, required: false %>
   </div>
 
   <div class="form-actions">

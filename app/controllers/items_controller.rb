@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
   # before_action :authenticate_user!, except: %i[index show]
-  # before_action :restrict_to_owner, only: %i[new create edit update destroy]
+  before_action :restrict_to_owner, only: %i[new create edit update destroy]
   # before_action only: %i[new create] { authorize Item }
   # before_action only: %i[edit update destroy] { authorize @item }
   before_action :authorize_item, except: %i[index show]
@@ -24,8 +24,12 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(item_params.except(:photo)) # Exclude photo from mass assignment
     authorize @item
+    if item_params[:photo].present?
+      uploaded_image = Cloudinary::Uploader.upload(item_params[:photo])
+      @item.photo = uploaded_image["public_id"]
+    end
     if @item.save
       redirect_to @item, notice: "Item created successfully."
     else
@@ -41,7 +45,11 @@ class ItemsController < ApplicationController
 
   def update
     authorize @item
-    if @item.update(item_params)
+    if item_params[:photo].present?
+      uploaded_image = Cloudinary::Uploader.upload(item_params[:photo])
+      params[:item][:photo] = uploaded_image["public_id"]
+    end
+    if @item.update(item_params.except(:photo))
       redirect_to @item, notice: "Item updated successfully."
     else
       @categories = Category.all.order(:name).map { |c| ["#{'-- ' if c.parent_id}#{c.name}", c.id] }
@@ -71,7 +79,7 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :name, :price, :stock, :fit_type, :category_id,
+      :name, :price, :stock, :fit_type, :category_id, :photo,
       item_variants_attributes: %i[id size color stock _destroy]
     )
   end

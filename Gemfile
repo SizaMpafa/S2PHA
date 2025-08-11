@@ -52,6 +52,7 @@ gem "sassc-rails"
 gem "devise"
 gem 'pundit'
 gem 'rubocop'
+gem 'cloudinary'
 
 group :development, :test do
   gem "dotenv-rails"

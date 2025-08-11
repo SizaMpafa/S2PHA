@@ -1,6 +1,8 @@
 class Item < ApplicationRecord
   belongs_to :category
   has_many :item_variants, dependent: :destroy
+  # has_one_attached :photo
+  # validates :photo, presence: true
 
   validates :name, :price, :category_id, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
