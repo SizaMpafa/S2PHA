@@ -1,0 +1,12 @@
+    <% if current_user.owner? %>
+      <div class="add-item">
+        <%= link_to new_item_path(category_id: params[:category_id] == "all" ? nil : params[:category_id]),
+                    class: "add-item-button" do %>
+          <% if params[:category_id].present? && params[:category_id] != "all" && @selected_category %>
+            add item under <%= @selected_category.name%>
+          <% else %>
+            add items
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>

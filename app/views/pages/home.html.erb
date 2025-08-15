@@ -1,37 +1,10 @@
 <div class="home-container">
-<%= current_user.owner?%>
-  <h1>Shop </h1>
-  <ul class="home-categories">
-    <li>
-      <%= link_to "All", root_path(category_id: "all"), class: "home-category #{"active" unless params[:category_id].present? && params[:category_id] != "all"}" %>
-    </li>
-    <% @categories.each do |category| %>
-      <li>
-        <%= link_to category.name, root_path(category_id: category.id), class: "home-category #{"active" if @selected_category&.id == category.id}" %>
-      </li>
-    <% end %>
-  </ul>
-
-    <% if current_user.owner? %>
-      <div class="add-item-button">
-        <%= link_to new_item_path(category_id: params[:category_id] == "all" ? nil : params[:category_id]),
-                    class: "btn btn-primary" do %>
-          <% if params[:category_id].present? && params[:category_id] != "all" && @selected_category %>
-            ADD ITEM UNDER <%= @selected_category.name.capitalize %>
-          <% else %>
-            ADD ITEMS
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
+  <%= render "items/add_item_button" %>
 
   <div class="cards items">
     <% if @items.any? %>
       <% @items.each do |item| %>
         <div class="card">
-          <%# if item.image.present? %>
-            <%#= image_tag item.image, alt: item.name, class: "card-image" %>
-          <%# end %>
           <div class="card-content" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= item.photo.present? ? cl_image_path(item.photo) : asset_path('bedged-red.jpg') %>')">
             <%= link_to item.name, item_path(item), class: "card-title" %>
             <p class="card-price"><%= number_to_currency(item.price) %></p>

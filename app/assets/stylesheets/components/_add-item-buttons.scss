@@ -1,0 +1,35 @@
+.add-item {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.add-item-button {
+  display: block;
+  width: 100%;
+  background-color: #86c98e;
+  color: #fff;
+  padding: 15px 30px;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.add-item-button:hover {
+  background-color: #6ba872;
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+@media (max-width: 576px) {
+  .add-item-button {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+}
